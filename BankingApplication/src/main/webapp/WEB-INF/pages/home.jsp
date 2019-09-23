@@ -1,0 +1,1 @@
+<p style="color:red">Welcome to the Home Page</p>

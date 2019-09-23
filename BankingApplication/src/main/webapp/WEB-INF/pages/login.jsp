@@ -1,0 +1,175 @@
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<SCRIPT LANGUAGE="JavaScript">
+
+function validate(form){
+
+	alert ("Validate function called");
+	for(var i=0;i<form.elements.length;i++){
+		if(form.elements[i].value==" "){
+			alert("Fill out all the field");
+			document.F1.username.focus();
+			return false;
+		}
+	}
+	if(!isNaN(document.F1.username.value)){
+		alert("UserName must be character");
+		document.F1.username.value=" ";
+		document.F1.username.focus();
+		return false;
+	}
+	if(!isNaN(document.F1.password.value)){
+		alert("Password must be character and cant be n null");
+		document.F1.password.value=" ";
+		document.F1.password.focus();
+		return false;
+	}
+}
+	
+</SCRIPT>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Global Banking ..</title>
+<link href="../resources/css/style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript">
+	function ctck() {
+		var sds = document.getElementById("dum");
+
+	}
+</script>
+
+</head>
+
+<body>
+
+	<div id="top_links">
+
+
+		<div id="header">
+			<h1>
+				APANA - BANK<span class="style1"></span>
+			</h1>
+			<h2>ExtraOrdinary Service</h2>
+			<A href="index"><IMG SRC="../resources/images/images/home1.gif"></IMG></A>
+		</div>
+
+		<div id="navigation">
+			<ul>
+				<li><a href="create">NEW ACCOUNT</a></li>
+				<li><a href="balance1">BALANCE</a></li>
+				<li><a href="deposit1">DEPOSIT</a></li>
+				<li><a href="withdraw1">WITHDRAW</a></li>
+				<li><a href="transfer1">TRANSFER</a></li>
+				<li><a href="closeac1">CLOSE A/C</a></li>
+				<li><a href="about">ABOUT US</a></li>
+			</ul>
+		</div>
+
+
+
+		<table style="width: 800px; background: #FFFFFF; margin: 0 auto;">
+			<tr>
+				<td width="100" valign="top"
+					style="border-right: #666666 1px dotted;">
+					<div id="services">
+						<h1>Services</h1>
+						<br>
+						<ul>
+							<li><a href="#">www.javatpoint.com</a></li>
+							<li><a href="#">www.javacstpoint.com </a></li>
+							<li><a href="#">www.javatpoint.com/forum.jsp</a></li>
+						</ul>
+
+					</div>
+				</td>
+
+				<td width="450" valign="top">
+					<div id="welcome" style="border-right: #666666 1px dotted;">
+						<h1>TRANSFER FORM</h1>
+						<br>
+						<table align="center" bgcolor="white">
+							<tr>
+
+							</tr>
+							<tr>
+								<td><div>
+										<%
+											if (request.getAttribute("balance") != null) {
+												out.print(request.getAttribute("balance"));
+											}
+										%>
+									</div>
+									<form name=F1 onSubmit="return validate(this)" action="login" method="post">
+										<table cellspacing="5" cellpadding="3">
+											<tr>
+												<td>USER NAME:</td>
+												<td><input type="text" name="username"  id="username" required/></td>
+											</tr>
+											<tr>
+												<td>PASSWORD:</td>
+												<td><input type="password" name="password"  id="password" required/></td>
+											</tr>
+											<tr>
+												<td></td>
+												<td><input type="submit" value="Submit" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+													<INPUT TYPE=RESET VALUE="CLEAR"></td>
+											</tr>
+										</table>
+									</form></td>
+							</tr>
+						</table>
+					</div>
+				</td>
+
+				<td width="250" valign="top">
+					<div id="welcome" style="border-right: #666666 1px dotted;">
+						<h1>Welcome</h1>
+						<br>
+						<center>
+							<img src="images/globe_10.gif" alt="business" width="196"
+								height="106">
+						</center>
+						<br>
+						<p>Each people plan their site layouts depending upon their
+							business type. Here comes a free designer template which provides
+							you with a selection of different kinds of webdesign starting
+							from business template, fashion template, media template, Science
+							template, Arts template and much more.</p>
+
+					</div>
+				</td>
+
+
+			</tr>
+		</table>
+
+		<div id="footer_top">
+			<div id="footer_navigation"></div>
+
+			<div id="footer_copyright">
+
+				<center>
+					<img alt="business" width="196" height="106">
+				</center>
+				<br>
+				<p>Each people plan their site layouts depending upon their
+					business type. Here comes a free designer template which provides
+					you with a selection of different kinds of webdesign starting from
+					business template, fashion template, media template, Science
+					template, Arts template and much more.</p>
+
+				Copyright © Your Company Name
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			document.onload = ctck();
+		</script>
+	</div>
+
+</body>
+</html>
