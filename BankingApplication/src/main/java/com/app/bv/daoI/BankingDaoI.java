@@ -34,6 +34,8 @@ public interface BankingDaoI {
 
 	boolean checkAccountAvailability(String sourceAccountNo);
 
-	boolean amountTransfer(String sourceAccountNo, String destinationAccountNo);
+	boolean amountTransfer(String sourceAccountNo, String destinationAccountNo,String amount);
+
+	List<Account> getAccountData(String sourceAccountNo);
 
 }
