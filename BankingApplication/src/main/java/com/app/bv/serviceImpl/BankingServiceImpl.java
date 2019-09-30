@@ -104,8 +104,13 @@ public class BankingServiceImpl implements BankingServiceI {
 
     @Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false,rollbackFor=Exception.class)
     public boolean amountTransfer(String sourceAccountNo,
-			String destinationAccountNo) {
-		return bankingdoi.amountTransfer(sourceAccountNo,destinationAccountNo);
+			String destinationAccountNo,String amount) {
+		return bankingdoi.amountTransfer(sourceAccountNo,destinationAccountNo,amount);
+	}
+
+    @Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false,rollbackFor=Exception.class)
+    public List<Account> getAccountData(String sourceAccountNo) {
+		return bankingdoi.getAccountData(sourceAccountNo);
 	}
 
 }
