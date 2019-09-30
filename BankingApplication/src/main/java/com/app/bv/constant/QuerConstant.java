@@ -14,5 +14,9 @@ public class QuerConstant {
     public final static String withdrawAmount="update Account as acc set acc.amount=? where acc.accountNo=?";
     public final static String totalAmount="from Account where accountNo=?";
     public final static String checkAccountAvailability="select count(*) from Account where accountNo=?";
-
+	public final static String query = "select count(*) from Account where accountNo=?";
+	public final static String updateDestinationAmount="update Account set amount=? where accountNo=?";
+    public final static String getDestinationAmount="select amount from Account where accountNo=?";
+    public final static String updateSourceAccount="update Account set amount=? where accountNo=?";
+    public final static String getAccountData="from Account where accountNo=?";
 }
