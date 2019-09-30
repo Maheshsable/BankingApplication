@@ -1,10 +1,9 @@
 package com.app.bv.daoImpl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import org.hibernate.Query;
@@ -44,7 +43,8 @@ public class BankingDaoImpl implements BankingDaoI {
 		Session session = null;
 		Transaction tx = null;
 		int loginCredential = 0;
-		List list = null;
+		Long result = 0l;
+		List<BigDecimal> list = new ArrayList<BigDecimal>();
 		try {
 			// open the sessio
 			session = factory.openSession();
@@ -52,10 +52,11 @@ public class BankingDaoImpl implements BankingDaoI {
 			Query q = session.createQuery(query);
 			q.setParameter(0, username);
 			q.setParameter(1, password);
-			; // begin the transaction
 			tx = session.beginTransaction();
-			list = q.list();
-			if (list.size() >= 0) {
+			result = (Long) q.uniqueResult();
+			System.out.println(result);
+
+			if (result == 1) {
 				loginCredential = 1;
 			} else {
 				loginCredential = 0;
@@ -326,9 +327,9 @@ public class BankingDaoImpl implements BankingDaoI {
 						q3 = session3.createQuery(QuerConstant.depositAmount);
 						q3.setInteger(0, finalAmount);
 						q3.setInteger(1, Integer.parseInt(accountno));
-						result=q3.executeUpdate();
-						if(result!=0){
-							Account acc=new Account();
+						result = q3.executeUpdate();
+						if (result != 0) {
+							Account acc = new Account();
 							acc.setAccountNo(Integer.parseInt(accountno));
 							acc.setAmount(finalAmount);
 							amountData.add(acc);
@@ -347,50 +348,50 @@ public class BankingDaoImpl implements BankingDaoI {
 	@Override
 	public boolean withdrawAmount(String username, String password,
 			String amount, String accountno) {
-		Session session=null;
-		Session session1=null;
-		Session session2=null;
-		Transaction tx=null;
-		List logindata=new ArrayList();
-		List getAmount=new ArrayList();
-		List withdrawAmount=new ArrayList();
-		Query q1=null;
-		Query q2=null;
-		Query q3=null;
-		int result4=0;
-		session=factory.openSession();
-		q1=session.createQuery(QuerConstant.accountCredential);
-		q1.setParameter(0,username);
-		q1.setParameter(1,password);
-		logindata=q1.list();
-		if(logindata.size()>0){
-			session1=factory.openSession();
-			q2=session1.createQuery(QuerConstant.getAmount);
-			//set the amount to the query param
+		Session session = null;
+		Session session1 = null;
+		Session session2 = null;
+		Transaction tx = null;
+		List logindata = new ArrayList();
+		List getAmount = new ArrayList();
+		List withdrawAmount = new ArrayList();
+		Query q1 = null;
+		Query q2 = null;
+		Query q3 = null;
+		int result4 = 0;
+		session = factory.openSession();
+		q1 = session.createQuery(QuerConstant.accountCredential);
+		q1.setParameter(0, username);
+		q1.setParameter(1, password);
+		logindata = q1.list();
+		if (logindata.size() > 0) {
+			session1 = factory.openSession();
+			q2 = session1.createQuery(QuerConstant.getAmount);
+			// set the amount to the query param
 			q2.setParameter(0, Integer.parseInt(accountno));
-			getAmount=q2.list();
-			Iterator it=q2.iterate();
-			while(it.hasNext()){
-				int result=(int)it.next();
-				int amount1=Integer.parseInt(amount);
-				int finalAmount=result-amount1;
-				logger.info("Total amount after deduct is"+finalAmount);
-				session2=factory.openSession();
-				q3=session2.createQuery(QuerConstant.withdrawAmount);
+			getAmount = q2.list();
+			Iterator it = q2.iterate();
+			while (it.hasNext()) {
+				int result = (int) it.next();
+				int amount1 = Integer.parseInt(amount);
+				int finalAmount = result - amount1;
+				logger.info("Total amount after deduct is" + finalAmount);
+				session2 = factory.openSession();
+				q3 = session2.createQuery(QuerConstant.withdrawAmount);
 				q3.setParameter(0, finalAmount);
 				q3.setParameter(1, Integer.parseInt(accountno));
-				result4=q3.executeUpdate();
-				if(result4!=0){
-					Account acc=new Account();
+				result4 = q3.executeUpdate();
+				if (result4 != 0) {
+					Account acc = new Account();
 					acc.setAccountNo(Integer.parseInt(accountno));
 					acc.setAmount(finalAmount);
 					withdrawAmount.add(acc);
 				}
 			}
 		}
-		if(withdrawAmount.size()>0){
+		if (withdrawAmount.size() > 0) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
@@ -398,60 +399,121 @@ public class BankingDaoImpl implements BankingDaoI {
 	@Override
 	public List<Account> getAmount(String accountno) {
 
-		Session session=null;
-		Transaction tx=null;
-		Query q1=null;
-		List<Account> accountData=new ArrayList<Account>();
-		session=factory.openSession();
-		tx=session.beginTransaction();
-		q1=session.createQuery(QuerConstant.totalAmount);
-		//set the parameter to the query param
-		q1.setParameter(0,Integer.parseInt(accountno));
-		accountData=q1.list();
+		Session session = null;
+		Transaction tx = null;
+		Query q1 = null;
+		List<Account> accountData = new ArrayList<Account>();
+		session = factory.openSession();
+		tx = session.beginTransaction();
+		q1 = session.createQuery(QuerConstant.totalAmount);
+		// set the parameter to the query param
+		q1.setParameter(0, Integer.parseInt(accountno));
+		accountData = q1.list();
 		return accountData;
 	}
 
 	@Override
 	public boolean checkAccountAvailability(String sourceAccountNo) {
-		Session session=null;
-		Transaction tx=null;
-		Query q1=null;
-		int accountAvailability=0;
-		List checkAccount=new ArrayList();
-		session=factory.openSession();
-		tx=session.beginTransaction();
-		q1=session.createQuery(QuerConstant.checkAccountAvailability);
-		q1.setParameter(0, sourceAccountNo);
-		checkAccount=q1.list();
-		if(checkAccount.size()>0){
+		Session session = null;
+		Transaction tx = null;
+		Query q1 = null;
+		Long uniqueResult = 0l;
+		int accountAvailability = Integer.parseInt(sourceAccountNo);
+		List checkAccount = null;
+		session = factory.openSession();
+		tx = session.beginTransaction();
+		q1 = session.createQuery(QuerConstant.query);
+		q1.setParameter(0, accountAvailability);
+		uniqueResult = (Long) q1.uniqueResult();
+		if (uniqueResult==1) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
 
 	@Override
 	public boolean amountTransfer(String sourceAccountNo,
-			String destinationAccountNo) {
+			String destinationAccountNo,String Amount) {
+
+		//convert amount into the int
+		Integer amount=Integer.parseInt(Amount);
+		Session session = null;
+		Session session1 = null;
+		Session session3 = null;
+		Transaction tx = null;
+		Integer sourceAmount=null;
+		Integer sourceAmount1=0;
+		int destinationamount=0;
+		int destinationAmountUpdated=0;
+		Query q1 = null;
+		Query q2 = null;
+		Query q3 = null;
+		Query q4 = null;
+		int souceAmountDeducted=0;
+		List<Account> firstAccountAmount = new ArrayList<Account>();
+		try{
+		// get the amount from the first account
+		session = factory.openSession();
+		tx = session.beginTransaction();
+		q1 = session.createQuery(QuerConstant.getAmount);
+		q1.setParameter(0, Integer.parseInt(sourceAccountNo));
+		sourceAmount = (Integer)q1.uniqueResult();
+		sourceAmount1=sourceAmount;
+		if (sourceAmount1!=0) {
+			session1=factory.openSession();
+			q2=session1.createQuery(QuerConstant.getDestinationAmount);
+			q2.setParameter(0, Integer.parseInt(destinationAccountNo));
+			//set the parameter to the query
+			destinationamount=(int)q2.uniqueResult();
+			
+			//update the destination account with amount 
+			session3= factory.openSession();
+			q3=session3.createQuery(QuerConstant.updateDestinationAmount);
+			q3.setParameter(0, sourceAmount1+destinationamount);
+			q3.setParameter(1, Integer.parseInt(destinationAccountNo));
+			destinationAmountUpdated=(int)q3.executeUpdate();
+			if(destinationAmountUpdated==1){
+				//deduct the source account amount
+				Session session4=factory.openSession();
+				Query q5=session4.createQuery(QuerConstant.updateSourceAccount);
+				q5.setParameter(0, (sourceAmount-amount));
+				q5.setParameter(1, Integer.parseInt(sourceAccountNo));
+				souceAmountDeducted=(int)q5.executeUpdate();
+				if(souceAmountDeducted==1){
+					//commit the transaction
+					tx.commit();
+					
+				}
+			}
+
+		}
+		}
+		catch(Exception e){
+			tx.rollback();
+			System.out.println(e);
+		}
+		
+		if(souceAmountDeducted!=0){
+			return  true;
+		}else{
+			return false;
+		}
+	}
+
+	@Override
+	public List<Account> getAccountData(String sourceAccountNo) {
+		//get the session object
 		
 		Session session=null;
-		Session session1=null;
-		Session session3=null;
 		Transaction tx=null;
-		Query q1=null;
-		Query q2=null;
-		Query q3=null;
-		Query q4=null;
-		List<Account> firstAccountAmount=new ArrayList<Account>();
-		//get the amount from the first account
-		session=factory.openSession();
-		tx=session.beginTransaction();
-		q1=session.createQuery(QuerConstant.getAmount);
-		q1.setParameter(0, sourceAccountNo);
-		firstAccountAmount=q1.list();
-		if(firstAccountAmount.size()>0){
-			
-		}
-		}
-		
-		
+		List<Account> account=new ArrayList<Account>();
+		Query q=null;
+		//get the factory object
+	    session=factory.openSession();
+	    q=session.createQuery(QuerConstant.getAccountData);
+	    q.setParameter(0, Integer.parseInt(sourceAccountNo));
+	    account=q.list();
+		return account;
+	}
+}
