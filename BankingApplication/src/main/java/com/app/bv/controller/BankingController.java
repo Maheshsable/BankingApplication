@@ -140,57 +140,7 @@ public class BankingController {
 
 	}
 
-	/*@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public @ResponseBody String login(
-			@PathVariable("username") String username,
-			@PathVariable("password") String password, HttpSession session,
-			HttpServletRequest request) {
-		Gson gson = new Gson();
-		String result = null;
-
-		try {
-			boolean status = false;
-			if (username.isEmpty() && password.isEmpty()) {
-				logger.warning("username is" + username + " " + "password is"
-						+ password);
-				request.setAttribute("loginfail",
-						"UserName and Password should not be null");
-				result = "login";
-				result = gson.toJson(result);
-				return result;
-			} else {
-				status = loginserviceI.loginUser(username, password);
-				List allData = new ArrayList();
-				if (status) {
-					logger.info("Login success" + username);
-					session.setAttribute("username", username);
-					List<Register> userData = loginserviceI.getUserInfo();
-					System.out.println("data from the register" + userData);
-					session.setAttribute("userData", userData);
-					result = "index";
-					result = gson.toJson(result);
-					return result;
-				} else {
-					session.setAttribute("loginfail1",
-							"Invalid login Credential");
-					result = "create";
-					result = gson.toJson(result);
-					return result;
-				}// else
-			}// else
-
-		} catch (Exception e) {
-			logger.warning("exception caught" + e);
-			System.out.println(e);
-		}
-		result = "index";
-		result = gson.toJson(result);
-		return result;
-	}
-
-*/	
-	
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+		@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public @ResponseBody String login(@RequestBody Login login, HttpSession session,
 			HttpServletRequest request) {
 		Gson gson = new Gson();
