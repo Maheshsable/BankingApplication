@@ -472,8 +472,8 @@ public class BankingController {
 					List<Account> accountData = loginserviceI
 							.getAmount(accountno);
 					session.setAttribute("AccountData", accountData);
-					result="withdraw";
-					result=gson.toJson(result);
+					//result="withdraw";
+					result=gson.toJson(accountData);
 					return result;
 				} else {
 					session.setAttribute("invalidWithdraw",
