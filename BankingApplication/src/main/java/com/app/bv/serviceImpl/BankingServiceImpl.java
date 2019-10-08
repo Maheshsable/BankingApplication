@@ -42,9 +42,15 @@ public class BankingServiceImpl implements BankingServiceI {
 	}
 
 	@Override
+	@Transactional(propagation=Propagation.SUPPORTS,readOnly=true)
 	public List<State> getState(String cid) {
 		return bankingdoi.getState(cid);
 	}
+	/*
+	 * This method is used to return the list of city
+	 * @RequestParameter is stateId
+	 * return value is city list
+	 * */
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED)
