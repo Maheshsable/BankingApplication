@@ -284,7 +284,6 @@ public class BankingController {
 	//	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSX");
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
 
-	    //OffsetDateTime odt = OffsetDateTime.parse ( bdate , formatter );
 
 		// convert the date into java understandable format
 	   //	LocalDateTime ldt = LocalDateTime.parse(bdate, formatter);
